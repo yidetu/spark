@@ -232,6 +232,39 @@ private[spark] object Config extends Logging {
       .stringConf
       .createOptional
 
+  val KUBERNETES_LOCAL_DIRS_TMPFS =
+    ConfigBuilder("spark.kubernetes.local.dirs.tmpfs")
+      .doc("If set to true then emptyDir volumes created to back SPARK_LOCAL_DIRS will have " +
+        "their medium set to Memory so that they will be created as tmpfs (i.e. RAM) backed " +
+        "volumes. This may improve performance but scratch space usage will count towards " +
+        "your pods memory limit so you may wish to request more memory.")
+      .booleanConf
+      .createWithDefault(false)
+
+  val KUBERNETES_DRIVER_PODTEMPLATE_FILE =
+    ConfigBuilder("spark.kubernetes.driver.podTemplateFile")
+      .doc("File containing a template pod spec for the driver")
+      .stringConf
+      .createOptional
+
+  val KUBERNETES_EXECUTOR_PODTEMPLATE_FILE =
+    ConfigBuilder("spark.kubernetes.executor.podTemplateFile")
+      .doc("File containing a template pod spec for executors")
+      .stringConf
+      .createOptional
+
+  val KUBERNETES_DRIVER_PODTEMPLATE_CONTAINER_NAME =
+    ConfigBuilder("spark.kubernetes.driver.podTemplateContainerName")
+      .doc("container name to be used as a basis for the driver in the given pod template")
+      .stringConf
+      .createOptional
+
+  val KUBERNETES_EXECUTOR_PODTEMPLATE_CONTAINER_NAME =
+    ConfigBuilder("spark.kubernetes.executor.podTemplateContainerName")
+      .doc("container name to be used as a basis for executors in the given pod template")
+      .stringConf
+      .createOptional
+
   val KUBERNETES_AUTH_SUBMISSION_CONF_PREFIX =
     "spark.kubernetes.authenticate.submission"
 
