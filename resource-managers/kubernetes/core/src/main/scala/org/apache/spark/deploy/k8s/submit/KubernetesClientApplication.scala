@@ -223,8 +223,7 @@ private[spark] class KubernetesClientApplication extends SparkApplication {
       clientArguments.mainAppResource,
       clientArguments.mainClass,
       clientArguments.driverArgs,
-      clientArguments.maybePyFiles,
-      clientArguments.hadoopConfigDir)
+      clientArguments.maybePyFiles)
     val namespace = kubernetesConf.namespace()
     // The master URL has been checked for validity already in SparkSubmit.
     // We just need to get rid of the "k8s://" prefix here.
