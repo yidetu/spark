@@ -86,8 +86,7 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       _ => mountVolumesStep,
       _ => pythonStep,
       _ => rStep,
-      _ => javaStep,
-      _ => hadoopGlobalStep,
+      _ => javaStep,    
       _ => templateVolumeStep)
 
   test("Apply fundamental steps all the time.") {
@@ -273,8 +272,8 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      Option.empty)
+      Seq.empty[String]
+     )
     validateStepTypesApplied(
       builderUnderTest.buildFromFeatures(conf),
       BASIC_STEP_TYPE,
@@ -301,19 +300,16 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      hadoopConfSpec = Some(
-        HadoopConfSpec(
-          Some("/var/hadoop-conf"),
-          None)))
+      Seq.empty[String]
+     )
     validateStepTypesApplied(
       builderUnderTest.buildFromFeatures(conf),
       BASIC_STEP_TYPE,
       CREDENTIALS_STEP_TYPE,
       SERVICE_STEP_TYPE,
       LOCAL_DIRS_STEP_TYPE,
-      JAVA_STEP_TYPE,
-      HADOOP_GLOBAL_STEP_TYPE)
+      JAVA_STEP_TYPE
+      )
   }
 
   test("Apply HadoopSteps if HADOOP_CONF ConfigMap is defined.") {
@@ -332,19 +328,15 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      hadoopConfSpec = Some(
-        HadoopConfSpec(
-          None,
-          Some("pre-defined-configMapName"))))
+      Seq.empty[String]
+     )
     validateStepTypesApplied(
       builderUnderTest.buildFromFeatures(conf),
       BASIC_STEP_TYPE,
       CREDENTIALS_STEP_TYPE,
       SERVICE_STEP_TYPE,
       LOCAL_DIRS_STEP_TYPE,
-      JAVA_STEP_TYPE,
-      HADOOP_GLOBAL_STEP_TYPE)
+      JAVA_STEP_TYPE)
   }
 
   private def validateStepTypesApplied(resolvedSpec: KubernetesDriverSpec, stepTypes: String*)
@@ -384,8 +376,7 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      Option.empty)
+      Seq.empty[String])
     val driverSpec = KubernetesDriverBuilder
       .apply(kubernetesClient, sparkConf)
       .buildFromFeatures(kubernetesConf)
@@ -417,8 +408,7 @@ class KubernetesDriverBuilderSuite extends SparkFunSuite {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      Option.empty)
+      Seq.empty[String])
     val exception = intercept[SparkException] {
       KubernetesDriverBuilder
         .apply(kubernetesClient, sparkConf)

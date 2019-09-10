@@ -56,11 +56,7 @@ private[spark] class KubernetesDriverBuilder(
     provideJavaStep: (
       KubernetesConf[KubernetesDriverSpecificConf]
         => JavaDriverFeatureStep) =
-    new JavaDriverFeatureStep(_),
-    provideHadoopGlobalStep: (
-      KubernetesConf[KubernetesDriverSpecificConf]
-        => KerberosConfDriverFeatureStep) =
-    new KerberosConfDriverFeatureStep(_),
+    new JavaDriverFeatureStep(_),    
     providePodTemplateConfigMapStep: (KubernetesConf[_ <: KubernetesRoleSpecificConf]
       => PodTemplateConfigMapStep) =
     new PodTemplateConfigMapStep(_),
@@ -97,14 +93,9 @@ private[spark] class KubernetesDriverBuilder(
           provideRStep(kubernetesConf)}
       .getOrElse(provideJavaStep(kubernetesConf))
 
-    val maybeHadoopConfigStep =
-      kubernetesConf.hadoopConfSpec.map { _ =>
-        provideHadoopGlobalStep(kubernetesConf)}
-
     val allFeatures: Seq[KubernetesFeatureConfigStep] =
       (baseFeatures :+ bindingsStep) ++
-        secretFeature ++ envSecretFeature ++ volumesFeature ++
-        maybeHadoopConfigStep.toSeq ++ podTemplateFeature
+        secretFeature ++ envSecretFeature ++ volumesFeature ++ podTemplateFeature
 
     var spec = KubernetesDriverSpec(
       provideInitialPod(),
