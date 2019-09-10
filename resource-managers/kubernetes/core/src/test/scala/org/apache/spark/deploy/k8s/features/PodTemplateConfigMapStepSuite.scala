@@ -48,8 +48,7 @@ class PodTemplateConfigMapStepSuite extends SparkFunSuite with BeforeAndAfter {
       Map.empty,
       Map.empty,
       Nil,
-      Seq.empty[String],
-      Option.empty)
+      Seq.empty[String])
     templateFile = Files.createTempFile("pod-template", "yml").toFile
     templateFile.deleteOnExit()
     Mockito.doReturn(Option(templateFile.getAbsolutePath)).when(sparkConf)
